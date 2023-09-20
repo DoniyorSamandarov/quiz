@@ -1,23 +1,25 @@
 version: '3.8'
+volumes:
+  postgres_data:
 
 services:
-  web:
-    build: .
-    command: python /code/manage.py runserver 0.0.0.0:8000
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: quiz-django
     volumes:
       - .:/quiz:cached
     ports:
       - "8080:8000"
     depends_on:
-      - db
-  db:
-    image: postgres:13
+      - postgres
+  postgres:
+    build:
+      context: .
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     container_name: quiz-db
     hostname: postgres
     env_file:
       - .env
-
-volumes:
-  postgres_data:
