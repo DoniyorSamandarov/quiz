@@ -1,0 +1,11 @@
+FROM postgres:14.8-bullseye
+
+# Environment variables
+ENV POSTGRES_USER=${POSTGRES_USER}
+ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+# Create the database and user
+RUN mkdir -p /docker-entrypoint-initdb
+RUN echo "CREATE DATABASE quiz WITH ENCODING 'UTF8';" >> /docker-entrypoint-initdb/init.sql
+RUN echo "CREATE USER quiz WITH ENCRYPTED PASSWORD '${POSTGRES_PASSWORD}';" >> /docker-entrypoint-initdb/init.sql
+RUN echo "GRANT ALL PRIVILEGES ON DATABASE quiz TO quiz;" >> /docker-entrypoint-initdb/init.sql

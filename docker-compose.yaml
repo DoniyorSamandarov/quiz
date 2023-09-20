@@ -17,11 +17,12 @@ services:
   postgres:
     build:
       context: .
+      dockerfile: postgres-docker
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     container_name: quiz-db
     hostname: postgres
     ports:
-      - "5432"
+      - "5432:5432"
     env_file:
       - .env
