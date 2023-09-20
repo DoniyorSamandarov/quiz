@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-$b8@s_tjll#!#5cn$t()=!=444ig&nblki3($q)j3r2vb)-ii)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -41,11 +41,13 @@ INSTALLED_APPS = [
     'drf_yasg',
     'backend',
     'rest_framework_simplejwt',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -154,11 +156,6 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
+# CORS Settings
+CORS_ALLOW_ALL_ORIGINS = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# load local_settings.py
-try:
-    with open(Path.joinpath(Path(__file__).resolve().parent, 'local_settings.py')) as f:
-        exec(f.read(), globals())
-except IOError:
-    pass
